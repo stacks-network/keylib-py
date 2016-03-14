@@ -8,7 +8,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='keylib',
-    version='0.0.0',
+    version='0.0.1',
     url='https://github.com/blockstack/keylib-py',
     license='MIT',
     author='Blockstack Developers',
@@ -20,7 +20,7 @@ setup(
     install_requires=[
         'requests==2.4.3',
         'ecdsa==0.13',
-        'utilitybelt==0.2.1'
+        'utilitybelt==0.2.6'
     ],
     classifiers=[
         'Intended Audience :: Developers',

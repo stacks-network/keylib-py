@@ -1,5 +1,5 @@
 from binascii import hexlify, unhexlify
-from utilitybelt import is_int, dev_random_entropy, dev_urandom_entropy
+from utilitybelt import is_int, dev_random_entropy, dev_urandom_entropy, is_hex
 
 PUBLIC_KEY_MAGIC_BYTE = '\x04'
 COMPRESSED_PUBLIC_KEY_MAGIC_BYTES = ['\x02', '\x03']
