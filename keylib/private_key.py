@@ -13,7 +13,6 @@ import hashlib
 import ecdsa
 from binascii import hexlify, unhexlify
 from ecdsa.keys import SigningKey
-from utilitybelt import is_int, dev_random_entropy, dev_urandom_entropy
 
 from .key_formatting import compress, encode_privkey, get_privkey_format
 from .b58check import b58check_encode, b58check_decode

@@ -24,6 +24,81 @@ _reference_info = {
 }
 
 
+class ECPrivateKeyTest(unittest.TestCase):
+    reference = _reference_info
+
+    def setUp(self):
+        self.private_key = ECPrivateKey(self.reference['hex_private_key'], compressed=False)
+
+    def tearDown(self):
+        pass
+
+    def test_random_private_key(self):
+        private_key = ECPrivateKey()
+        self.assertTrue(isinstance(private_key, ECPrivateKey))
+
+    def test_private_key_from_wif(self):
+        self.private_key_from_wif = ECPrivateKey(
+            self.reference['wif_private_key'], compressed=False)
+        self.assertEqual(
+            self.private_key.to_hex(), self.private_key_from_wif.to_hex())
+
+    def test_hex_private_key(self):
+        self.assertEqual(
+            self.private_key.to_hex(), self.reference['hex_private_key'])
+
+    def test_wif_private_key(self):
+        self.assertEqual(
+            self.private_key.to_wif(), self.reference['wif_private_key'])
+
+    def test_pem_private_key(self):
+        self.assertEqual(
+            self.private_key.to_pem(), self.reference['pem_private_key'])
+
+    def test_der_private_key(self):
+        self.assertEqual(
+            self.private_key.to_der(), self.reference['der_private_key'])
+
+
+class ECPublicKeyCreationTest(unittest.TestCase):
+    def setUp(self):
+        self.address_compressed = '14Q8uVAX29RUMvqPGXL5sg6NiwwMRFCm8C'
+        self.address_uncompressed = '1AuZor1RVzG22wqbH2sG2j5WRDZsbw1tip'
+
+    def tearDown(self):
+        pass
+
+    def test_create_pubkey_from_hex_uncompressed_format(self):
+        public_key_string = '04068fd9d47283fb310e6dfb66b141dd78fbabc76d073d48cddc770ffb2bd262d7b2832f87f683100b89c2e95314deeeacbc6409af1e36c3ae3fd8c5f2f243cfec'
+        self.assertEqual(self.address_uncompressed, ECPublicKey(
+            public_key_string).address())
+
+    def test_create_pubkey_from_bin_uncompressed_format(self):
+        public_key_string = '\x04\x06\x8f\xd9\xd4r\x83\xfb1\x0em\xfbf\xb1A\xddx\xfb\xab\xc7m\x07=H\xcd\xdcw\x0f\xfb+\xd2b\xd7\xb2\x83/\x87\xf6\x83\x10\x0b\x89\xc2\xe9S\x14\xde\xee\xac\xbcd\t\xaf\x1e6\xc3\xae?\xd8\xc5\xf2\xf2C\xcf\xec'
+        self.assertEqual(self.address_uncompressed, ECPublicKey(
+            public_key_string).address())
+
+    def test_create_pubkey_from_hex_ecdsa_format(self):
+        public_key_string = '068fd9d47283fb310e6dfb66b141dd78fbabc76d073d48cddc770ffb2bd262d7b2832f87f683100b89c2e95314deeeacbc6409af1e36c3ae3fd8c5f2f243cfec'
+        self.assertEqual(self.address_uncompressed, ECPublicKey(
+            public_key_string).address())
+
+    def test_create_pubkey_from_bin_ecdsa_format(self):
+        public_key_string = '\x06\x8f\xd9\xd4r\x83\xfb1\x0em\xfbf\xb1A\xddx\xfb\xab\xc7m\x07=H\xcd\xdcw\x0f\xfb+\xd2b\xd7\xb2\x83/\x87\xf6\x83\x10\x0b\x89\xc2\xe9S\x14\xde\xee\xac\xbcd\t\xaf\x1e6\xc3\xae?\xd8\xc5\xf2\xf2C\xcf\xec'
+        self.assertEqual(self.address_uncompressed, ECPublicKey(
+            public_key_string).address())
+
+    def test_create_pubkey_from_hex_compressed_format(self):
+        public_key_string = '02068fd9d47283fb310e6dfb66b141dd78fbabc76d073d48cddc770ffb2bd262d7'
+        self.assertEqual(self.address_compressed, ECPublicKey(
+            public_key_string).address())
+
+    def test_create_pubkey_from_bin_compressed_format(self):
+        public_key_string = '\x02\x06\x8f\xd9\xd4r\x83\xfb1\x0em\xfbf\xb1A\xddx\xfb\xab\xc7m\x07=H\xcd\xdcw\x0f\xfb+\xd2b\xd7'
+        self.assertEqual(self.address_compressed, ECPublicKey(
+            public_key_string).address())
+
+
 class BitcoinUncompressedPublicKeyTest(unittest.TestCase):
     reference = _reference_info
 
@@ -87,45 +162,6 @@ class BitcoinCompressedPublicKeyTest(unittest.TestCase):
             self.public_key.to_hex(), self.reference['hex_public_key'])
 
 
-class ECPublicKeyCreationTest(unittest.TestCase):
-    def setUp(self):
-        self.address_compressed = '14Q8uVAX29RUMvqPGXL5sg6NiwwMRFCm8C'
-        self.address_uncompressed = '1AuZor1RVzG22wqbH2sG2j5WRDZsbw1tip'
-
-    def tearDown(self):
-        pass
-
-    def test_create_pubkey_from_hex_uncompressed_format(self):
-        public_key_string = '04068fd9d47283fb310e6dfb66b141dd78fbabc76d073d48cddc770ffb2bd262d7b2832f87f683100b89c2e95314deeeacbc6409af1e36c3ae3fd8c5f2f243cfec'
-        self.assertEqual(self.address_uncompressed, ECPublicKey(
-            public_key_string).address())
-
-    def test_create_pubkey_from_bin_uncompressed_format(self):
-        public_key_string = '\x04\x06\x8f\xd9\xd4r\x83\xfb1\x0em\xfbf\xb1A\xddx\xfb\xab\xc7m\x07=H\xcd\xdcw\x0f\xfb+\xd2b\xd7\xb2\x83/\x87\xf6\x83\x10\x0b\x89\xc2\xe9S\x14\xde\xee\xac\xbcd\t\xaf\x1e6\xc3\xae?\xd8\xc5\xf2\xf2C\xcf\xec'
-        self.assertEqual(self.address_uncompressed, ECPublicKey(
-            public_key_string).address())
-
-    def test_create_pubkey_from_hex_ecdsa_format(self):
-        public_key_string = '068fd9d47283fb310e6dfb66b141dd78fbabc76d073d48cddc770ffb2bd262d7b2832f87f683100b89c2e95314deeeacbc6409af1e36c3ae3fd8c5f2f243cfec'
-        self.assertEqual(self.address_uncompressed, ECPublicKey(
-            public_key_string).address())
-
-    def test_create_pubkey_from_bin_ecdsa_format(self):
-        public_key_string = '\x06\x8f\xd9\xd4r\x83\xfb1\x0em\xfbf\xb1A\xddx\xfb\xab\xc7m\x07=H\xcd\xdcw\x0f\xfb+\xd2b\xd7\xb2\x83/\x87\xf6\x83\x10\x0b\x89\xc2\xe9S\x14\xde\xee\xac\xbcd\t\xaf\x1e6\xc3\xae?\xd8\xc5\xf2\xf2C\xcf\xec'
-        self.assertEqual(self.address_uncompressed, ECPublicKey(
-            public_key_string).address())
-
-    def test_create_pubkey_from_hex_compressed_format(self):
-        public_key_string = '02068fd9d47283fb310e6dfb66b141dd78fbabc76d073d48cddc770ffb2bd262d7'
-        self.assertEqual(self.address_compressed, ECPublicKey(
-            public_key_string).address())
-
-    def test_create_pubkey_from_bin_compressed_format(self):
-        public_key_string = '\x02\x06\x8f\xd9\xd4r\x83\xfb1\x0em\xfbf\xb1A\xddx\xfb\xab\xc7m\x07=H\xcd\xdcw\x0f\xfb+\xd2b\xd7'
-        self.assertEqual(self.address_compressed, ECPublicKey(
-            public_key_string).address())
-
-
 class ECPrivateKeyToPublicKeyTest(unittest.TestCase):
     reference = _reference_info
 
@@ -140,38 +176,6 @@ class ECPrivateKeyToPublicKeyTest(unittest.TestCase):
         pub = priv.public_key()
         self.assertEqual(pub.to_hex(), self.reference['hex_public_key'])
         self.assertEqual(pub.address(), self.reference['address'])
-
-
-class ECPrivateKeyTest(unittest.TestCase):
-    reference = _reference_info
-
-    def setUp(self):
-        self.private_key = ECPrivateKey(self.reference['hex_private_key'], compressed=False)
-
-    def tearDown(self):
-        pass
-
-    def test_private_key_from_wif(self):
-        self.private_key_from_wif = ECPrivateKey(
-            self.reference['wif_private_key'], compressed=False)
-        self.assertEqual(
-            self.private_key.to_hex(), self.private_key_from_wif.to_hex())
-
-    def test_hex_private_key(self):
-        self.assertEqual(
-            self.private_key.to_hex(), self.reference['hex_private_key'])
-
-    def test_wif_private_key(self):
-        self.assertEqual(
-            self.private_key.to_wif(), self.reference['wif_private_key'])
-
-    def test_pem_private_key(self):
-        self.assertEqual(
-            self.private_key.to_pem(), self.reference['pem_private_key'])
-
-    def test_der_private_key(self):
-        self.assertEqual(
-            self.private_key.to_der(), self.reference['der_private_key'])
 
 
 class BitcoinB58CheckTest(unittest.TestCase):
@@ -202,11 +206,11 @@ class BitcoinB58CheckTest(unittest.TestCase):
 
 def test_main():
     test_support.run_unittest(
+        ECPrivateKeyTest,
+        ECPublicKeyCreationTest,
         BitcoinUncompressedPublicKeyTest,
         BitcoinCompressedPublicKeyTest,
-        ECPublicKeyCreationTest,
         ECPrivateKeyToPublicKeyTest,
-        ECPrivateKeyTest,
         BitcoinB58CheckTest
     )
 

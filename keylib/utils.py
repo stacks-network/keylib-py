@@ -1,4 +1,5 @@
 from binascii import hexlify, unhexlify
+from utilitybelt import is_int, dev_random_entropy, dev_urandom_entropy
 
 PUBLIC_KEY_MAGIC_BYTE = '\x04'
 COMPRESSED_PUBLIC_KEY_MAGIC_BYTES = ['\x02', '\x03']
@@ -22,7 +23,7 @@ def random_secret_exponent(curve_order):
     # than the curve order
     while True:
         # generate a random 256 bit hex string
-        random_hex = hexlify(dev_random_entropy(32))
+        random_hex = hexlify(dev_urandom_entropy(32))
         random_int = int(random_hex, 16)
         if random_int >= 1 and random_int < curve_order:
             break
