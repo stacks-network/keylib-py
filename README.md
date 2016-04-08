@@ -43,8 +43,11 @@ True
 #### Addresses
 
 ```python
+>>> from keylib import public_key_to_address
 >>> public_key.address()
 '12WDrxysCBDtVxaP1n4HHj8BLqqqfaqANd'
 >>> public_key.hash160()
 '107eecc5868111ba06e6bd9309b2db90c555cb6e'
+>>> public_key_to_address("030589ee559348bd6a7325994f9c8eff12bd5d73cc683142bd0dd1a17abc99b0dc")
+'1KbUJ4x8epz6QqxkmZbTc4f79JbWWz6g37'
 ```

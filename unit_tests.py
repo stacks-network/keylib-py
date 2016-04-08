@@ -5,7 +5,7 @@ from test import test_support
 
 from keylib import (
     b58check_encode, b58check_decode, b58check_unpack,
-    ECPrivateKey, ECPublicKey
+    ECPrivateKey, ECPublicKey, public_key_to_address
 )
 
 _reference_info = {
@@ -203,6 +203,19 @@ class BitcoinB58CheckTest(unittest.TestCase):
         wif_private_key = b58check_encode(
             bin_private_key, version_byte=ord(version_byte))
         self.assertEqual(self.reference['wif_private_key'], wif_private_key)
+
+    def test_public_key_to_address(self):
+        public_key = "030589ee559348bd6a7325994f9c8eff12bd5d73cc683142bd0dd1a17abc99b0dc"
+        address = public_key_to_address(public_key)
+        reference_address = "1KbUJ4x8epz6QqxkmZbTc4f79JbWWz6g37"
+        self.assertEqual(address, reference_address)
+
+    def test_public_key_to_address_2(self):
+        public_key = "0479BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8"
+        address = public_key_to_address(public_key)
+        reference_address = "1EHNa6Q4Jz2uvNExL497mE43ikXhwF6kZm"
+        self.assertEqual(address, reference_address)
+
 
 def test_main():
     test_support.run_unittest(
