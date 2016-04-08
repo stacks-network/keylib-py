@@ -9,6 +9,7 @@
 
 from binascii import unhexlify, hexlify
 from .b58check import b58check_encode, b58check_decode
+from .hashing import bin_hash160
 
 
 def bin_hash160_to_address(bin_hash160, version_byte=0):
