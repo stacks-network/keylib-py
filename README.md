@@ -1,6 +1,6 @@
 # Keylib
 
-[![CircleCI](https://img.shields.io/circleci/project/blockstack/keylib-py/master.svg)](https://circleci.com/gh/blockstack/keylib-py)
+[![CircleCI](https://img.shields.io/circleci/project/blockstack/keylib-py/master.svg)](https://circleci.com/gh/blockstack/keylib-py/tree/master)
 [![PyPI](https://img.shields.io/pypi/v/keylib.svg)](https://pypi.python.org/pypi/keylib/)
 [![PyPI](https://img.shields.io/pypi/dm/keylib.svg)](https://pypi.python.org/pypi/keylib/)
 [![PyPI](https://img.shields.io/pypi/l/keylib.svg)](https://github.com/namesystem/keylib/blob/master/LICENSE)
