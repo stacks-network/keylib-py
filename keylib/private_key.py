@@ -35,8 +35,8 @@ class ECPrivateKey():
             secret_exponent = random_secret_exponent(self._curve.order)
         else:
             secret_exponent = encode_privkey(private_key, 'decimal')
-            if get_privkey_format(private_key).endswith('compressed'):
-                self._compressed = True
+            if not get_privkey_format(private_key).endswith('compressed'):
+                self._compressed = False
 
         # make sure that: 1 <= secret_exponent < curve_order
         if not is_secret_exponent(secret_exponent, self._curve.order):
