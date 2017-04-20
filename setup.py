@@ -18,7 +18,6 @@ setup(
     packages=find_packages(),
     zip_safe=False,
     install_requires=[
-        'requests>=2.9.1',
         'ecdsa>=0.13',
         'utilitybelt>=0.2.6'
     ],
