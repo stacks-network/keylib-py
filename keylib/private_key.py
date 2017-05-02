@@ -69,7 +69,7 @@ class ECPrivateKey():
     def to_wif(self):
         if self._compressed:
             return encode_privkey(
-                self._ecdsa_private_key.to_string(), 'wif_compressed')
+                self._ecdsa_private_key.to_string(), 'wif_compressed', vbyte=self._pubkeyhash_version_byte)
         else:
             return b58check_encode(
                 self.to_bin(), version_byte=self.wif_version_byte())
